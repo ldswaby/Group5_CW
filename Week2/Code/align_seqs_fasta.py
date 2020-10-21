@@ -2,7 +2,10 @@
 
 """Aligns sequences"""
 
-__author__ = 'Luke Swaby (lds20@ic.ac.uk)'
+__author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
+             'Jinkai Sun (jingkai.sun20@imperial.ac.uk), ' \
+             'Acacia Tang (t.tang20@imperial.ac.uk), ' \
+             'Dengku Tang (dengkui.tang20@imperial.ac.uk)'
 __version__ = '0.0.1'
 
 ## Imports ##
@@ -30,18 +33,16 @@ def extract_seq(filename):
     """
     with open(filename) as f:
         line1 = f.readline().strip()
-        pattern = "^[A-Z]+$"
-        #TODO: each see if we can think of a more reliable header test^
-        no_header = re.match(pattern, line1)
-        if no_header:
-            # If there is no header (just seq)...
-            f.seek(0) # Return to first line
-            head = None
-            seq = ''.join(line.strip() for line in f) # Join all lines into seq var
-        else:
+        header = line1.startswith('>')
+        if header:
             # If there a header...
             head = line1
             seq = ''.join(line.strip() for line in f)
+        else:
+            # If there is no header (just seq)...
+            f.seek(0)  # Return to first line
+            head = None
+            seq = ''.join(line.strip() for line in f)  # Join all lines into seq var
 
     return seq, head
 

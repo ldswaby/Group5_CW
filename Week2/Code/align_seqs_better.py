@@ -2,7 +2,10 @@
 
 """Aligns sequences"""
 
-__author__ = 'Luke Swaby (lds20@ic.ac.uk)'
+__author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
+             'Jinkai Sun (jingkai.sun20@imperial.ac.uk), ' \
+             'Acacia Tang (t.tang20@imperial.ac.uk), ' \
+             'Dengku Tang (dengkui.tang20@imperial.ac.uk)'
 __version__ = '0.0.1'
 
 ## Imports ##
