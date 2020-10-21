@@ -96,6 +96,7 @@ def main(argv):
             my_best_score = z
 
     with open('../Results/Best_Aligned_Sequences_fasta.fa', 'w') as algmt:
+        #TODO: Reconsider these^ names?
         if h2:
             algmt.write(f'{h2}\n')
         algmt.write(f'{my_best_align}\n')
