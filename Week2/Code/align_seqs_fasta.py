@@ -9,17 +9,17 @@ __author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
 __version__ = '0.0.1'
 
 ## Imports ##
-import sys, re
+import sys
 
 ## Functions ##
-def calculate_score(s1, s2, l1, l2, startpoint):
+def calculate_score(s1, s2, startpoint):
     """Calculate best alignment score (no. of matched bases) if 2
     sequences
     """
     matched = "" # to hold string displaying alignements
     score = 0
-    for i in range(l2):
-        if (i + startpoint) < l1:
+    for i in range(len(s1)):
+        if (i + startpoint) < len(s1) and s2[i] != '-':
             if s1[i + startpoint] == s2[i]: # if the bases match
                 matched += "*"
                 score += 1
@@ -72,29 +72,42 @@ def main(argv):
     l1 = len(seq1)
     l2 = len(seq2)
     if l1 >= l2:
-        s1 = seq1
+        s1 = (l2 - 1) * '-' + seq1 + (l2 - 1) * '-'
+        s2 = seq2 + (l1 + l2 - 2) * '-'
         h1 = head1
-        s2 = seq2
         h2 = head2
+        padlen = len(s2)
     else:
-        s1 = seq2
-        h1 = head2
-        s2 = seq1
-        h2 = head1
         l1, l2 = l2, l1  # swap the two lengths
+        s1 = (l2 - 1) * '-' + seq2 + (l2 - 1) * '-'
+        s2 = seq1 + (l1 + l2 - 2) * '-'
+        h1 = head2
+        h2 = head1
+        padlen = len(s2)
 
     # Find the best match (highest score) for the two sequences
     my_best_align = None
     my_best_score = -1
-    #s1 = "-" * len(s2) + s1
-    #TODO: each work on ways of doing this^
 
-    for i in range(l1):  # Note that you just take the last alignment with the highest score
-        z = calculate_score(s1, s2, l1, l2, i)
+    for i in range(padlen - l2 + 1):  # Note that you just take the last alignment with the highest score
+        z = calculate_score(s1, s2, i)
         if z > my_best_score:
-            my_best_align = "-" * i + s2  # think about what this is doing!
+            my_best_align = "-" * i + s2[:-i]  # start sequence at startpoint
             my_best_score = z
 
+    # Clip trailing hyphens
+    s1start = s1.find(next(filter(str.isalpha, s1)))
+    s2start = s2.find(next(filter(str.isalpha, s2)))
+    start = max(s1start, s2start)
+
+    s1end = s1[start:].find('-')
+    s2end = my_best_align[start:].find('-')
+    stop = len(s1[start:]) - max(s1end, s2end)
+
+    my_best_align = my_best_align[start:-stop]
+    s1 = s1[start:-stop]
+
+    # Write fasta out
     with open('../Results/Best_Aligned_Sequences_fasta.fa', 'w') as algmt:
         #TODO: Reconsider these^ names?
         if h2:
@@ -102,8 +115,6 @@ def main(argv):
         algmt.write(f'{my_best_align}\n')
         if h1:
             algmt.write(f'{h1}\n')
-        #s1 = s1.replace('.', '')
-        algmt.write(s1)
         algmt.write(s1)
         #algmt.write('\n\n' + f"Best score: {my_best_score}")
 

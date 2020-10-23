@@ -9,17 +9,17 @@ __author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
 __version__ = '0.0.1'
 
 ## Imports ##
-import sys, re
+import sys
 
 ## Functions ##
-def calculate_score(s1, s2, l1, l2, startpoint):
-    """Calculate best alignment score (no. of matched bases) of 2
+def calculate_score(s1, s2, startpoint):
+    """Calculate best alignment score (no. of matched bases) if 2
     sequences
     """
     matched = "" # to hold string displaying alignements
     score = 0
-    for i in range(l2):
-        if (i + startpoint) < l1:
+    for i in range(len(s1)):
+        if (i + startpoint) < len(s1) and s2[i] != '-':
             if s1[i + startpoint] == s2[i]: # if the bases match
                 matched += "*"
                 score += 1
@@ -46,9 +46,6 @@ def extract_seq(filename):
 
     return seq, head
 
-#TODO: wouldn't it make more sense to have this as argv[1:]? Otherwise if
-# someone wants to import it as a module and use main() they'd have to input
-# a random first element of the list (as 'align_seqs_better.py' is no longer there)
 def main(argv):
     """Run functions
     """
@@ -75,33 +72,45 @@ def main(argv):
     l1 = len(seq1)
     l2 = len(seq2)
     if l1 >= l2:
-        s1 = seq1
+        s1 = (l2 - 1) * '-' + seq1 + (l2 - 1) * '-'
+        s2 = seq2 + (l1 + l2 - 2) * '-'
         h1 = head1
-        s2 = seq2
         h2 = head2
+        padlen = len(s2)
     else:
-        s1 = seq2
-        h1 = head2
-        s2 = seq1
-        h2 = head1
         l1, l2 = l2, l1  # swap the two lengths
+        s1 = (l2 - 1) * '-' + seq2 + (l2 - 1) * '-'
+        s2 = seq1 + (l1 + l2 - 2) * '-'
+        h1 = head2
+        h2 = head1
+        padlen = len(s2)
 
     # Find the best match (highest score) for the two sequences
     aligns = {}
     #TODO: More memory-efficient way of doing this^?
     my_best_score = -1
 
-    for i in range(l1):
-        # Find highest score
-        z = calculate_score(s1, s2, l1, l2, i)
+    for i in range(padlen - l2 + 1):  # Note that you just take the last alignment with the highest score
+        z = calculate_score(s1, s2, i)
         if z > my_best_score:
             my_best_score = z
         # Load dict with scores for keys and lists of corresponding alignments
         # for values.
         if z in aligns.keys():
-            aligns[z].append("-" * i + s2)
+            aligns[z].append("-" * i + s2[:-i])
         else:
-            aligns[z] = ["-" * i + s2]
+            aligns[z] = ["-" * i + s2[:-i]]
+
+    # Clip trailing hyphens (by determining start/stop values)
+    s1start = s1.find(next(filter(str.isalpha, s1)))
+    s2start = min(aln.find(next(filter(str.isalpha, aln))) for aln in aligns[my_best_score])
+    start = max(s1start, s2start)
+
+    s1end = s1[start:].find('-')
+    s2end = max(aln[start:].find('-') for aln in aligns[my_best_score])
+    stop = len(s1[start:]) - max(s1end, s2end)
+
+    s1 = s1[start:-stop]
 
     # Write output
     with open('../Results/group_better_algmt.fa', 'w') as out:
@@ -110,12 +119,13 @@ def main(argv):
             if h2:
                 # print s2 header if present
                 out.write(f'{h2} — Alignment {no}; Score: {my_best_score}\n')
-            out.write(f'{algmt}\n')
+            out.write(f'{algmt[start:-stop]}\n')
         if h1:
             # print s1 header if present
             out.write(f'{h1}\n')
         out.write(s1)
-        #out.write('\n\n' + f"Best score: {my_best_score}")
+
+    print(f'Best Score: {my_best_score}')
 
     return 0
 
