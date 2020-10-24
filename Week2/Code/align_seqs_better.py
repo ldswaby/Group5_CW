@@ -13,18 +13,16 @@ import sys
 
 ## Functions ##
 def calculate_score(s1, s2, startpoint):
-    """Calculate best alignment score (no. of matched bases) if 2
-    sequences
+    """Calculate best alignment score (no. of matched bases) of 2 padded
+     sequences
     """
-    matched = "" # to hold string displaying alignements
     score = 0
     for i in range(len(s1)):
-        if (i + startpoint) < len(s1) and s2[i] != '-':
-            if s1[i + startpoint] == s2[i]: # if the bases match
-                matched += "*"
+        if (i + startpoint) < len(s1):
+            if s1[i + startpoint] == s2[i] and s2[i] != '-':
                 score += 1
             else:
-                matched += "-"
+                continue
 
     return score
 
@@ -113,7 +111,7 @@ def main(argv):
     s1 = s1[start:-stop]
 
     # Write output
-    with open('../Results/group_better_algmt.fa', 'w') as out:
+    with open('../Results/align_seqs_better.fa', 'w') as out:
         # TODO: Reconsider these^ names?
         for no, algmt in enumerate(aligns[my_best_score], 1):
             if h2:

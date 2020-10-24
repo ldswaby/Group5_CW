@@ -13,18 +13,16 @@ import sys
 
 ## Functions ##
 def calculate_score(s1, s2, startpoint):
-    """Calculate best alignment score (no. of matched bases) if 2
-    sequences
+    """Calculate best alignment score (no. of matched bases) of 2 padded
+     sequences
     """
-    matched = "" # to hold string displaying alignements
     score = 0
     for i in range(len(s1)):
-        if (i + startpoint) < len(s1) and s2[i] != '-':
-            if s1[i + startpoint] == s2[i]: # if the bases match
-                matched += "*"
+        if (i + startpoint) < len(s1):
+            if s1[i + startpoint] == s2[i] and s2[i] != '-':
                 score += 1
             else:
-                matched += "-"
+                continue
 
     return score
 
@@ -108,7 +106,7 @@ def main(argv):
     s1 = s1[start:-stop]
 
     # Write fasta out
-    with open('../Results/Best_Aligned_Sequences_fasta.fa', 'w') as algmt:
+    with open('../Results/align_seqs_fasta.fa', 'w') as algmt:
         #TODO: Reconsider these^ names?
         if h2:
             algmt.write(f'{h2}\n')
