@@ -84,7 +84,8 @@ def main(argv):
         padlen = len(s2)
 
     # Find the best match (highest score) for the two sequences
-    aligns = {}
+    #aligns = {}
+    scores = {}
     #TODO: More memory-efficient way of doing this^?
     my_best_score = -1
 
@@ -92,20 +93,24 @@ def main(argv):
         z = calculate_score(s1, s2, i)
         if z > my_best_score:
             my_best_score = z
+            scores[i] = my_best_score
         # Load dict with scores for keys and lists of corresponding alignments
         # for values.
-        if z in aligns.keys():
-            aligns[z].append("-" * i + s2[:-i])
-        else:
-            aligns[z] = ["-" * i + s2[:-i]]
+        #if z in aligns.keys():
+        #    aligns[z].append("-" * i + s2[:-i])
+        #else:
+        #    aligns[z] = ["-" * i + s2[:-i]]
+
+    aligns = ["-" * i + s2[:-i] for i in scores.keys() if
+              scores[i] == max(scores.values())]
 
     # Clip trailing hyphens (by determining start/stop values)
     s1start = s1.find(next(filter(str.isalpha, s1)))
-    s2start = min(aln.find(next(filter(str.isalpha, aln))) for aln in aligns[my_best_score])
+    s2start = min(aln.find(next(filter(str.isalpha, aln))) for aln in aligns)
     start = max(s1start, s2start)
 
     s1end = s1[start:].find('-')
-    s2end = max(aln[start:].find('-') for aln in aligns[my_best_score])
+    s2end = max(aln[start:].find('-') for aln in aligns)
     stop = len(s1[start:]) - max(s1end, s2end)
 
     s1 = s1[start:-stop]
@@ -113,7 +118,7 @@ def main(argv):
     # Write output
     with open('../Results/align_seqs_better.fa', 'w') as out:
         # TODO: Reconsider these^ names?
-        for no, algmt in enumerate(aligns[my_best_score], 1):
+        for no, algmt in enumerate(aligns, 1):
             if h2:
                 # print s2 header if present
                 out.write(f'{h2} — Alignment {no}; Score: {my_best_score}\n')
