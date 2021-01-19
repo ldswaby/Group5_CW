@@ -41,6 +41,10 @@ def main(argv):
     default_path = "../Data/"
     filename = argv[1]
     filename_noExt = re.search(r"\w+", filename).group()
+    # I don't think this covers paths etc. I tried
+    # '../Data/lala.txt' an this returned 'Data'
+    # Would argv[1].split('/')[-1].split('.')[0] be better?
+    # No need for re package if so.
     save_name = "../Results/%s_treeheights_python.csv" % filename_noExt
     filepath = default_path + filename
     trees_data = pd.DataFrame(pd.read_csv(filepath))
