@@ -21,6 +21,13 @@ import LV1, LV2, LV3, LV4
 
 def main(h=0):
     """Print profiles on Lotka-Volterra model scripts
+
+    Arguments:
+     - h: numerical argument specifying the number of lines of each profile
+          output the user wants printed to the command line.
+
+    Output:
+     - Printed profiles to the command line.
     """
     ## Print profile for each file ##
     for file in [LV1, LV2, LV3, LV4]:
