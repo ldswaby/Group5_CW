@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
 
 """ Groupwork: to do vectorize1 using Python """
-# Script Name: Vectorize1.py
-# Author: Jingkai Sun (ks3020@ic.ac.uk)
+
+## Variables ##
+
+__author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
+             'Jinkai Sun (jingkai.sun20@imperial.ac.uk), ' \
+             'Acacia Tang (t.tang20@imperial.ac.uk), ' \
+             'Dengku Tang (dengkui.tang20@imperial.ac.uk)'
+__version__ = '0.0.1'
+
+## Imports ##
 
 import numpy as np
 import time
+
+## Main ##
 
 M = np.random.rand(1000, 1000)
 # M = np.array(M)

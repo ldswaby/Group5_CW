@@ -4,6 +4,8 @@
 argument specifying the number of lines of each profile output the user wants
 printed to the command line"""
 
+## Variables ##
+
 __author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
              'Jinkai Sun (jingkai.sun20@imperial.ac.uk), ' \
              'Acacia Tang (t.tang20@imperial.ac.uk), ' \
@@ -11,6 +13,7 @@ __author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
 __version__ = '0.0.1'
 
 ## Imports ##
+
 import sys
 import io
 import pstats
