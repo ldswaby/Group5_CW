@@ -47,7 +47,7 @@ def discreteLV(r0, c0, t, r, a, z, e, K, E):
 
     for i in range(len(t)-1):
         Rnext = RC[i][0] * (1 + (r + E) * (1 - RC[i][0] / K) - a * RC[i][1])
-        Cnext = RC[i][1] * (1 - z + e * a * RC[i][0])
+        Cnext = RC[i][1] * (1 - (z + E) + e * a * RC[i][0])
 
         # Set upper and lower population limits (0:K)
         for ix, pop in enumerate([Rnext, Cnext]):
@@ -61,8 +61,22 @@ def discreteLV(r0, c0, t, r, a, z, e, K, E):
 
     return RC
 
-def main(r=1., a=0.1, z=1.5, e=0.75, K=30, tN=35):
-    """Plot the Lotka-Volterra model with prey density dependence.
+def main(r=1, a=0.1, z=1.5, e=0.75, K=30, tN=15):
+    """Plot discrete version of the Lotka-Volterra model with random gaussian
+    fluctuation in resource’s growth rate at each time-step.
+
+    Arguments:
+     - r: Intrinsic (per-capita) growth rate of the 'resource population
+          (/time).'
+     - a: Encounter and consumption rate of the consumer on the resource
+     - z: Mortality rate (/time).
+     - e: The consumer’s efficiency (a fraction) in converting resource to
+          consumer biomass.
+     - K: Environment carrying capacity.
+     - tN: Time interval to display in output plot.
+
+    Output:
+     - Plot of population density against time: '../Results/LV4_model.pdf'
     """
 
     # Define the time vector

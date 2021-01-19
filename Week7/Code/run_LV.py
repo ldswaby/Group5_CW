@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-"""Print profiles on Lotka-Volterra model scripts"""
+"""Print profiles on Lotka-Volterra model scripts, taking a single numerical
+argument specifying the number of lines of each profile output the user wants
+printed to the command line"""
 
 __author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
              'Jinkai Sun (jingkai.sun20@imperial.ac.uk), ' \
@@ -9,7 +11,10 @@ __author__ = 'Luke Swaby (lds20@ic.ac.uk), ' \
 __version__ = '0.0.1'
 
 ## Imports ##
-import cProfile, pstats, io, sys
+import sys
+import io
+import pstats
+import cProfile
 import LV1, LV2, LV3, LV4
 
 ## Functions ##

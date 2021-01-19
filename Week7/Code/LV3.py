@@ -59,8 +59,22 @@ def discreteLV(r0, c0, t, r, a, z, e, K):
 
     return RC
 
-def main(r=1., a=0.1, z=1.5, e=0.75, K=30, tN=35):
-    """Plot the Lotka-Volterra model with prey density dependence.
+def main(r=1, a=0.1, z=1.5, e=0.75, K=30, tN=35):
+    """Plot discrete version of the Lotka-Volterra model with random gaussian
+    fluctuation in resource’s growth rate at each time-step.
+
+    Arguments:
+     - r: Intrinsic (per-capita) growth rate of the 'resource population
+          (/time).'
+     - a: Encounter and consumption rate of the consumer on the resource
+     - z: Mortality rate (/time).
+     - e: The consumer’s efficiency (a fraction) in converting resource to
+          consumer biomass.
+     - K: Environment carrying capacity.
+     - tN: Time interval to display in output plot.
+
+    Output:
+     - Plot of population density against time: '../Results/LV3_model.pdf'
     """
 
     # Define the time vector
