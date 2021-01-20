@@ -49,7 +49,6 @@ def main():
     """Print the execution time of  loop-based stochrick() and vectorized
     stockrickvect1() functions.
     """
-
     # Loop
     start1 = time.time()
     p0 = [rd.uniform(0.5, 1.5) for i in range(0, 1000)]
