@@ -18,10 +18,9 @@ import time
 ## Main ##
 
 M = np.random.rand(1000, 1000)
-# M = np.array(M)
-# Dimensions = np.shape(M)
 
 def SumALLElements(M):
+    """ sum all elements of a matrix """
     Tot = 0
     Dimensions = np.shape(M)
     for i in range(0, Dimensions[0]):

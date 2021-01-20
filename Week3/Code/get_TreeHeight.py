@@ -15,7 +15,6 @@ __version__ = '0.0.1'
 import sys
 import pandas as pd
 import numpy as np
-import re
 
 ## Functions ##
 
@@ -38,26 +37,21 @@ def TreesHeight(degrees, dist):
     return height
 
 def main(argv):
+    """main function"""
     default_path = "../Data/"
     if len(sys.argv) == 1:
         filename = "trees.csv"
     else:
         filename = argv[1]
-    filename_noExt = re.search(r"\w+", filename).group()
-    # I don't think this covers paths etc. I tried
-    # '../Data/lala.txt' an this returned 'Data'
-    # Would argv[1].split('/')[-1].split('.')[0] be better?
-    # No need for re package if so.
+    filename_noExt = argv[1].split('/')[-1].split('.')[0]
     save_name = "../Results/%s_treeheights_python.csv" % filename_noExt
     filepath = default_path + filename
     trees_data = pd.DataFrame(pd.read_csv(filepath))
-    
     trees_data["Height"] = TreesHeight(trees_data["Angle.degrees"],
                                        trees_data["Distance.m"])
     
     # Save to csv
     trees_data.to_csv(save_name, sep=",", index = False)
-
     return 0
 
 if __name__ == "__main__":

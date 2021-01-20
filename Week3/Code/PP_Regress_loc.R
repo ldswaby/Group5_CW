@@ -1,3 +1,7 @@
+# Script Name: PP_Regress_loc.R
+# Author: Luke Swaby (lds20@ic.ac.uk), Jingkai Sun (ks3020@ic.ac.uk)
+#         Acacia Tang (t.tang20@imperial.ac.uk), Dengku Tang (dengkui.tang20@imperial.ac.uk)
+
 #load data
 MyDF <- read.csv("../Data/EcolArchives-E089-51-D1.csv")
 
