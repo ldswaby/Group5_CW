@@ -107,7 +107,6 @@ def main(argv):
 
     # Write fasta out
     with open('../Results/align_seqs_fasta.fa', 'w') as algmt:
-        #TODO: Reconsider these^ names?
         if h2:
             algmt.write(f'{h2}\n')
         algmt.write(f'{my_best_align}\n')

@@ -39,8 +39,8 @@ def is_an_oak(name):
 def main(argv):
     """Run functions
     """
-    f = open('../data/TestOaksData.csv','r')
-    g = open('../data/JustOaksData.csv','w')
+    f = open('../data/TestOaksData.csv', 'r')
+    g = open('../data/JustOaksData.csv', 'w')
     taxa = csv.reader(f)
     header = next(taxa, None)
     csvwrite = csv.writer(g)
