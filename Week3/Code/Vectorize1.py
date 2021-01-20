@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-""" Groupwork: to do vectorize1 using Python """
+"""Groupwork: to do vectorize1 using Python"""
 
 ## Variables ##
 
@@ -12,15 +12,16 @@ __version__ = '0.0.1'
 
 ## Imports ##
 
-import numpy as np
+import sys
 import time
+import numpy as np
 
-## Main ##
+## Functions ##
 
-M = np.random.rand(1000, 1000)
 
 def SumALLElements(M):
-    """ sum all elements of a matrix """
+    """Sum all elements of a matrix
+    """
     Tot = 0
     Dimensions = np.shape(M)
     for i in range(0, Dimensions[0]):
@@ -28,11 +29,26 @@ def SumALLElements(M):
             Tot += M[i, j]
     return Tot
 
-start1 = time.time()
-SumALLElements(M)
-print("SumALLElements takes %f s to run" % (time.time() - start1))
 
-start2 = time.time()
-# print(np.sum(M))
-np.sum(M)
-print("np.sum takes %f s to run" % (time.time() - start2))
+def main():
+    """Print the execution time of loop-based SumALLElements() and vectorized
+    np.sum() functions.
+    """
+    M = np.random.rand(1000, 1000)
+
+    start1 = time.time()
+    SumALLElements(M)
+    print("SumALLElements takes %f s to run" % (time.time() - start1))
+
+    start2 = time.time()
+    # print(np.sum(M))
+    np.sum(M)
+    print("np.sum takes %f s to run" % (time.time() - start2))
+
+    return 0
+
+## Main ##
+
+if __name__ == '__main__':
+    status = main()
+    sys.exit(status)

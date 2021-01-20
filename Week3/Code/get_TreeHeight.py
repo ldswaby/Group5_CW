@@ -37,13 +37,19 @@ def TreesHeight(degrees, dist):
     return height
 
 def main(argv):
-    """main function"""
+    """Writes tree height results to CSV file including the input file name in
+    the output file name.
+    """
     default_path = "../Data/"
+
     if len(sys.argv) == 1:
         filename = "trees.csv"
     else:
         filename = argv[1]
-    filename_noExt = argv[1].split('/')[-1].split('.')[0]
+
+    filename_noExt = argv[1].split('/')[-1].split('.')[0]  # Assumes no full
+                                                           # stops in filename
+
     save_name = "../Results/%s_treeheights_python.csv" % filename_noExt
     filepath = default_path + filename
     trees_data = pd.DataFrame(pd.read_csv(filepath))
@@ -52,10 +58,11 @@ def main(argv):
     
     # Save to csv
     trees_data.to_csv(save_name, sep=",", index = False)
+
     return 0
+
+## Main ##
 
 if __name__ == "__main__":
     status = main(sys.argv)
     sys.exit(status)
-
-
