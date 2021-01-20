@@ -18,7 +18,10 @@ def TreesHeight(degrees, dist):
 
 def main(argv):
     default_path = "../Data/"
-    filename = argv[1]
+    if len(sys.argv) == 1:
+        filename = "trees.csv"
+    else:
+        filename = argv[1]
     filename_noExt = re.search(r"\w+", filename).group()
     save_name = "../Results/%s_treeheights_python.csv" % filename_noExt
     filepath = default_path + filename
