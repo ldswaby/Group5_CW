@@ -1,7 +1,13 @@
 require(tools)
 
 rm(list = ls())
-fileName = commandArgs(trailingOnly = TRUE)
+
+if (length(commandArgs(trailingOnly = TRUE)) == 1){
+  fileName = commandArgs(trailingOnly = TRUE)
+} else {
+  fileName = "trees.csv"
+}
+
 noExtension = tools::file_path_sans_ext(fileName)
 # print(noExtension)
 defaultDataDir = "../Data/" 

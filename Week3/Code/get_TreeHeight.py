@@ -39,7 +39,10 @@ def TreesHeight(degrees, dist):
 
 def main(argv):
     default_path = "../Data/"
-    filename = argv[1]
+    if len(sys.argv) == 1:
+        filename = "trees.csv"
+    else:
+        filename = argv[1]
     filename_noExt = re.search(r"\w+", filename).group()
     # I don't think this covers paths etc. I tried
     # '../Data/lala.txt' an this returned 'Data'
