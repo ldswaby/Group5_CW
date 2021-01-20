@@ -36,7 +36,7 @@ def is_an_oak(name):
     """
     return 'quercus' in name.split()[0].lower()
 
-def main(argv):
+def main():
     """Run functions
     """
     f = open('../data/TestOaksData.csv', 'r')
@@ -57,5 +57,5 @@ def main(argv):
     return 0
 
 if __name__ == "__main__":
-    status = main(sys.argv)
+    status = main()
     sys.exit(status)

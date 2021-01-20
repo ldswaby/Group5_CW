@@ -2,15 +2,15 @@
 # Author: Luke Swaby (lds20@ic.ac.uk), Jingkai Sun (ks3020@ic.ac.uk)
 #         Acacia Tang (t.tang20@imperial.ac.uk), Dengku Tang (dengkui.tang20@imperial.ac.uk)
 
+#load packages
+library(dplyr)
+
 #load data
 MyDF <- read.csv("../Data/EcolArchives-E089-51-D1.csv")
 
 #make grouping variables factors
 MyDF$Type.of.feeding.interaction <- as.factor(MyDF$Type.of.feeding.interaction)
 MyDF$Predator.lifestage <- as.factor(MyDF$Predator.lifestage)
-
-#load packages
-require(dplyr)
 
 #regression results
 combinations <- as.matrix(unique(select(MyDF, Type.of.feeding.interaction, Location, Predator.lifestage))) # get all combinations of factors to analysize by
