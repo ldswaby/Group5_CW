@@ -58,9 +58,9 @@ if __name__ == '__main__':
         head = int(sys.argv[1])
         status = main(head)
     elif len(sys.argv) < 2:
-        print('WARNING: no arguments parsed. Default used = 0.')
+        print('WARNING: no arguments parsed. Default used = 0.\n')
         status = main()
     else:
-        print('WARNING: too many arguments parsed. Default used = 0.')
+        print('WARNING: too many arguments parsed. Default used = 0.\n')
         status = main()
     sys.exit(status)
