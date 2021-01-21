@@ -84,7 +84,6 @@ def main(argv):
         padlen = len(s2)
 
     # Find the best match (highest score) for the two sequences
-    #aligns = {}
     scores = {}
     my_best_score = -1
 
