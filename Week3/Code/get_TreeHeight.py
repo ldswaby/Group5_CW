@@ -42,12 +42,18 @@ def main(argv):
     """
     default_path = "../Data/"
 
-    if len(sys.argv) == 1:
+    if len(argv) == 2:
+        filename = argv[1]
+    elif len(argv) < 2:
+        print("WARNING: no arguments parsed. Default filename used: "
+              "'trees.csv'.\n")
         filename = "trees.csv"
     else:
-        filename = argv[1]
+        print("WARNING: too many arguments parsed.Default filename used: "
+              "'trees.csv'.\n")
+        filename = "trees.csv"
 
-    filename_noExt = argv[1].split('/')[-1].split('.')[0]  # Assumes no full
+    filename_noExt = filename.split('/')[-1].split('.')[0]  # Assumes no full
                                                            # stops in filename
 
     save_name = "../Results/%s_treeheights_python.csv" % filename_noExt
@@ -57,7 +63,7 @@ def main(argv):
                                        trees_data["Distance.m"])
     
     # Save to csv
-    trees_data.to_csv(save_name, sep=",", index = False)
+    trees_data.to_csv(save_name, sep=",", index=False)
 
     return 0
 
