@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-"""Calculate tree heights using Python"""
+"""Calculate tree heights using Python and writes to csv. Accepts Two optional
+arguments: file name, and output directory path."""
 
 ## Variables ##
 
@@ -40,24 +41,29 @@ def main(argv):
     """Writes tree height results to CSV file including the input file name in
     the output file name.
     """
-    default_path = "../Data/"
 
-    if len(argv) == 2:
-        filename = argv[1]
-    elif len(argv) < 2:
+    if len(argv) < 2:
         print("WARNING: no arguments parsed. Default filename used: "
               "'trees.csv'.\n")
         filename = "trees.csv"
+        outdir = "../Data/"
+    elif len(argv) == 2:
+        filename = argv[1]
+        outdir = "../Data/"
+    elif len(argv) == 3:
+        filename = argv[1]
+        outdir = argv[2]  # Accept output directory path as second arg
     else:
         print("WARNING: too many arguments parsed.Default filename used: "
               "'trees.csv'.\n")
         filename = "trees.csv"
+        outdir = "../Data/"
 
     filename_noExt = filename.split('/')[-1].split('.')[0]  # Assumes no full
                                                            # stops in filename
 
     save_name = "../Results/%s_treeheights_python.csv" % filename_noExt
-    filepath = default_path + filename
+    filepath = outdir + filename
     trees_data = pd.DataFrame(pd.read_csv(filepath))
     trees_data["Height"] = TreesHeight(trees_data["Angle.degrees"],
                                        trees_data["Distance.m"])
